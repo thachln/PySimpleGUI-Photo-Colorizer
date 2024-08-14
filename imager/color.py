@@ -5,9 +5,9 @@ import cv2
 class Colorizer:
     def __init__(self, prototxt, model, points):
 
-        # prototxt = r'model/colorization_deploy_v2.prototxt'
-        # model = r'model/colorization_release_v2.caffemodel'
-        # points = r'model/pts_in_hull.npy'
+        # prototxt = r'../model/colorization_deploy_v2.prototxt'
+        # model = r'../model/colorization_release_v2.caffemodel'
+        # points = r'../model/pts_in_hull.npy'
         points = os.path.join(os.path.dirname(__file__), points)
         prototxt = os.path.join(os.path.dirname(__file__), prototxt)
         model = os.path.join(os.path.dirname(__file__), model)

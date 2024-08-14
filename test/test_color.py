@@ -15,11 +15,14 @@ class TestColorizer(unittest.TestCase):
         image, colorized = c.colorize_image('data/1.png')
         self.assertIsNotNone(colorized)  # add assertion here
 
+        if not os.path.exists('out'):
+            os.mkdir('out')
+
         cv2.imwrite('out/1_c.png', colorized)
+
+
 
 
 if __name__ == '__main__':
     # Create out folder to store colorized images.
-    if not os.path.exists('out'):
-        os.mkdir('out')
     unittest.main()
