@@ -11,6 +11,8 @@ appbuilder = AppBuilder(app, db.session)
 # Add classes of API
 appbuilder.add_api(ColorizerApi)
 
-print('Try to open URL http://127.0.0.1:5000/api/colorizer/')
+
+
+print('Try to open URL http://127.0.0.1:5000/api/colorizer')
 
 

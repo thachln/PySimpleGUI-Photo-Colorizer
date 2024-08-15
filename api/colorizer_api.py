@@ -3,6 +3,8 @@ import os
 
 import numpy as np
 
+import requests
+
 import io
 from flask_appbuilder.api import BaseApi, expose
 from flask import request, send_file, jsonify
@@ -14,6 +16,7 @@ UPLOAD_FOLDER = 'api/uploads'
 class ColorizerApi(BaseApi):
 
     route_base = "/api"
+
     @expose('/colorizer', methods=["GET", "POST"])
     def colorize(self):
         prototxt = r'../model/colorization_deploy_v2.prototxt'
@@ -25,7 +28,7 @@ class ColorizerApi(BaseApi):
         c = Colorizer(prototxt, model, points)
 
         if request.method == "GET":
-            return self.response(200, message="Welcome to Colorizer API.")
+            return self.response(200, message="Welcome to Colorizer API. To send an black and white image, please make a POST request using the same URL.")
         elif request.method == "POST":
             if not os.path.exists(UPLOAD_FOLDER):
                 os.mkdir(UPLOAD_FOLDER)
@@ -35,9 +38,9 @@ class ColorizerApi(BaseApi):
             file.save(image_url)
 
             image, colorized = c.colorize_image(image_url)
-            image_bytes = colorized.tobytes()
-            # mem = io.BytesIO()
-            # mem.write(image_bytes)
-            # mem.seek(0)
-            print(image_bytes)
-            return self.response(200, data="colorized")
+
+            buffer = cv2.imencode('.jpg', colorized)[1].tobytes()
+
+            io_buffer = io.BytesIO(buffer).getvalue()
+
+            return send_file(io.BytesIO(io_buffer), mimetype='image/jpeg', as_attachment=True, download_name=file.filename)
