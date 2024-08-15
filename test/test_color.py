@@ -21,8 +21,6 @@ class TestColorizer(unittest.TestCase):
         cv2.imwrite('out/1_c.png', colorized)
 
 
-
-
 if __name__ == '__main__':
     # Create out folder to store colorized images.
     unittest.main()
