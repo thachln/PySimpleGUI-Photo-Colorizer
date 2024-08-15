@@ -11,7 +11,13 @@ from imager.color import Colorizer
 UPLOAD_FOLDER = 'api/uploads'
 ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg'}
 
+
 def allowed_file(filename):
+    """"
+    This function is used to check if a file is an allowed extension.
+    :param filename: (str) full filename
+    :return: (bool) True or False
+    """
     return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
 
@@ -28,6 +34,8 @@ class ColorizerApi(BaseApi):
             os.mkdir(UPLOAD_FOLDER)
 
         c = Colorizer(prototxt, model, points)
+
+        c.colorize_image()
 
         if request.method == "GET":
             return self.response(200, message="Welcome to Colorizer API. To send an black and white image, please make a POST request using the same URL.")
